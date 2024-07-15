@@ -1,7 +1,12 @@
-use crate::Config;
+#![allow(dead_code)]
 use serde::Deserialize;
 
-/// General config of editor
+#[derive(Debug, Deserialize)]
+pub struct Config {
+    theme: String,
+    editor: EditorConfig,
+}
+
 #[derive(Debug, Deserialize)]
 pub struct EditorConfig {
     mouse: bool,
@@ -17,6 +22,7 @@ pub struct StatuslineConfig {
     pub separator: String,
     pub left: Vec<String>,
 }
+
 impl EditorConfig {
     pub fn see_what_is_active(fileconfig: Config) {
         if fileconfig.editor.mouse {

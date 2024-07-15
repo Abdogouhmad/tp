@@ -4,3 +4,12 @@ for you text editor. The supported text editors are:
 - [Diwan](https://github.com/Abdogouhmad/Diwan)
 - [Helix](https://github.com/helix-editor/helix/)
 
+## Tasks
+- [ ] Create CLI (clap / idk)
+	- [x] init the cli
+	- [x] define 1st option command `-c / --check` for checking config file in specific path
+	- [ ] define 2nd op cmd `-g / generate` for generating the absolute config
+		- [ ] http request that will download a template from my repo and place it in `~/.config/helix`
+- [ ] get the absolute configuration 1st
+- [ ] handle the error displaying
+	- [ ] identify where is the error and print it to be colorized.

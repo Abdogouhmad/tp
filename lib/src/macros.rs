@@ -1,11 +1,19 @@
-// src/print_macro.rs
 #[macro_export]
 macro_rules! colprintln {
     ($fmt:expr $(, $args:tt)*) => {{
         let formatted_str = format!($fmt $(, $args)*);
-        let colored_str = print_macro::replace_color_tags(&formatted_str);
+        let colored_str = $crate::macros::replace_color_tags(&formatted_str);
         println!("{}", colored_str);
     }};
+}
+
+#[macro_export]
+macro_rules! eclprintln {
+    ($fmt:expr $(, $args:tt)*) => {
+        let formatted_str = format!($fmt $(, $args)*);
+        let colored_str = $crate::macros::replace_color_tags(&formatted_str);
+        eprintln!("{}", colored_str);
+    };
 }
 
 pub fn replace_color_tags(input: &str) -> String {

@@ -1,9 +1,18 @@
-[package]
-name = "parser"
-version = "0.1.0"
-edition = "2021"
+[workspace]
 
-[dependencies]
-anyhow = "1.0.86"
-serde = {version = "1.0.204", features = ["derive"] }
-toml = "0.8.14"
+members = ["parser", "lib"]
+resolver = "2"
+
+[workspace.package]
+description = "tp is CLI tool that will guide people who don't care about configuring Helix or Diwan they just wanna work"
+version = "24.7.14"
+edition = "2021"
+authors = ["Abdogouhmad"]
+readme = "README.md"
+repository = "https://github.com/abdogouhmad/tp"
+
+
+[profile.dev]
+opt-level = 1
+[profile.release]
+opt-level = 3
