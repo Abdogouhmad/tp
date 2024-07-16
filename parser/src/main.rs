@@ -1,8 +1,8 @@
 #[macro_use]
 extern crate tparser;
 use clap::Parser;
-use std::fs;
 use std::path::PathBuf;
+use tparser::read::path::open_file_config;
 
 /// Tp is a command line interface for generating and validating helix configuration.
 #[derive(Parser, Debug)]
@@ -22,9 +22,9 @@ fn main() {
     if let Some(file_config) = arg.check.as_deref() {
         match file_config.to_str() {
             Some(conf_str) if get_extension_from_filename(conf_str) == Some("toml") => {
-                match fs::read_to_string(file_config) {
-                    Ok(contents) => colprintln!("<g>File contents:</g>\n{}", contents),
-                    Err(err) => eprintln!("Failed to read file: {}", err),
+                if let Err(err) = open_file_config(file_config) {
+                    eclprintln!("<r>{}</r>", err);
+                    std::process::exit(1);
                 }
             }
             _ => {
