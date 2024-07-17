@@ -1,7 +1,7 @@
 theme = "gruvbox"
 
 [editor]
-mouse = true
+mouse = tru
 auto-save = false
 auto-format = true
 popup-border = "all"

@@ -1,4 +1,3 @@
-use crate::colprintln;
 use anyhow::{Context, Result};
 use std::{
     fs::{self, metadata},
@@ -18,7 +17,6 @@ pub fn open_file_config(fileconfig: &Path) -> Result<String> {
 
     if fileconfig.exists() {
         let content = fs::read_to_string(fileconfig).context("Failed to read file")?;
-        colprintln!("<g>File contents:</g>\n{}", content);
         Ok(content)
     } else {
         Err(anyhow::anyhow!(
