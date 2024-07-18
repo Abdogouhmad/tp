@@ -19,22 +19,22 @@ macro_rules! eclprintln {
 pub fn replace_color_tags(input: &str) -> String {
     let mut output = input.to_string();
     let colors = vec![
-        ("<b>", "\x1b[30m"),
-        ("<r>", "\x1b[31m"),
-        ("<g>", "\x1b[32m"),
-        ("<y>", "\x1b[33m"),
-        ("<bl>", "\x1b[34m"), // Changed <b> to <bl> for blue to avoid conflict with bold
-        ("<m>", "\x1b[35m"),
-        ("<c>", "\x1b[36m"),
-        ("<w>", "\x1b[37m"),
-        ("</b>", "\x1b[0m"),
-        ("</r>", "\x1b[0m"),
-        ("</g>", "\x1b[0m"),
-        ("</y>", "\x1b[0m"),
-        ("</bl>", "\x1b[0m"), // Changed <b> to <bl> for blue to avoid conflict with bold
-        ("</m>", "\x1b[0m"),
-        ("</c>", "\x1b[0m"),
-        ("</w>", "\x1b[0m"),
+        ("<b>", "\x1b[1;30m"),  // Bold black
+        ("<r>", "\x1b[1;31m"),  // Bold red
+        ("<g>", "\x1b[1;32m"),  // Bold green
+        ("<y>", "\x1b[1;33m"),  // Bold yellow
+        ("<bl>", "\x1b[1;34m"), // Bold blue
+        ("<m>", "\x1b[1;35m"),  // Bold magenta
+        ("<c>", "\x1b[1;36m"),  // Bold cyan
+        ("<w>", "\x1b[1;37m"),  // Bold white
+        ("</b>", "\x1b[0m"),    // Reset
+        ("</r>", "\x1b[0m"),    // Reset
+        ("</g>", "\x1b[0m"),    // Reset
+        ("</y>", "\x1b[0m"),    // Reset
+        ("</bl>", "\x1b[0m"),   // Reset
+        ("</m>", "\x1b[0m"),    // Reset
+        ("</c>", "\x1b[0m"),    // Reset
+        ("</w>", "\x1b[0m"),    // Reset
     ];
 
     for (tag, code) in colors {

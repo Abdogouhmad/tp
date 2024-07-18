@@ -1,13 +1,13 @@
 #[macro_use]
 extern crate tparser;
 
-// use anyhow::Context;
+use clap::builder::{styling::AnsiColor, Styles};
 use clap::Parser;
 use std::path::PathBuf;
 use tparser::fields::editor_field::Config;
 /// Tp is a command line interface for generating and validating helix configuration.
 #[derive(Parser, Debug)]
-#[command(version = "24.7.14", long_about)]
+#[command(version = "24.7.14", about ,long_about, styles=style_docs())]
 pub struct Tp {
     /// Check the file config in a specific dir -c=path/ --check=path
     #[arg(short, long, value_name = "FILE CONFIG")]
@@ -23,8 +23,15 @@ fn main() {
     if let Some(file_config) = arg.check.as_deref() {
         match file_config.to_str() {
             Some(conf_str) if get_extension_from_filename(conf_str) == Some("toml") => {
-                let final_config = Config::new(file_config).expect("not done"); // the match goes inside config using self method
-                final_config.see_what_is_active();
+                match Config::new(file_config) {
+                    Ok(_) => {
+                        colprintln!("<g>Config file loaded successfully, and everything is ok</g>");
+                    }
+                    Err(err) => {
+                        eclprintln!("<r>Error: {}</r>", err);
+                        std::process::exit(1);
+                    }
+                }
             }
             _ => {
                 eclprintln!("<r>This file is not a toml file or invalid path</r>");
@@ -43,7 +50,15 @@ fn get_extension_from_filename(filename: &str) -> Option<&str> {
         .extension()
         .and_then(std::ffi::OsStr::to_str)
 }
-// if let Err(err) = open_file_config(file_config) {
-//     eclprintln!("<r>{}</r>", err);
-//     std::process::exit(1);
-// }
+
+// style help of cli
+fn style_docs() -> Styles {
+    Styles::styled()
+        .usage(AnsiColor::BrightBlue.on_default())
+        .header(AnsiColor::BrightYellow.on_default())
+        .literal(AnsiColor::BrightMagenta.on_default())
+        .invalid(AnsiColor::BrightRed.on_default())
+        .error(AnsiColor::BrightRed.on_default())
+        .valid(AnsiColor::BrightWhite.on_default())
+        .placeholder(AnsiColor::BrightBlue.on_default())
+}

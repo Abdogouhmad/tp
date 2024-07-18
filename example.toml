@@ -1,8 +1,8 @@
 theme = "gruvbox"
 
 [editor]
-mouse = tru
-auto-save = false
+mouse = true
+auto-save = true
 auto-format = true
 popup-border = "all"
 [editor.cursor-shape]
@@ -14,7 +14,14 @@ select = "underline"
 [editor.statusline]
 left = ["mode", "spinner"]
 center = ["file-name"]
-right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+right = [
+    "diagnostics",
+    "selections",
+    "position",
+    "file-encoding",
+    "file-line-ending",
+    "file-type",
+]
 separator = "│"
 mode.normal = "NORMAL"
 mode.insert = "INSERT"

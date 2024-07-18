@@ -13,3 +13,4 @@ maintenance = { status = "actively-developed" }
 anyhow = "1.0.86"
 clap = { version = "4.5.1", features = ["derive", "cargo"] }
 tparser = { path = "../lib" }
+toml = "0.8.15"
