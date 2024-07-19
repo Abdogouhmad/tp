@@ -5,8 +5,19 @@ use std::{
     path::Path,
 };
 
-/// # open_file_config
-/// get the path of file, read it and return its content  
+/// Opens the configuration file and returns its content as a string.
+///
+/// # Arguments
+///
+/// * `file_path` - A reference to the path of the configuration file.
+///
+/// # Returns
+///
+/// * `Result<String, anyhow::Error>` - A Result containing the file content as a string if successful, or an error if the file cannot be opened.
+///
+/// # Errors
+///
+/// This function will return an error if the file cannot be opened.
 pub fn open_file_config(fileconfig: &Path) -> Result<String> {
     let metadata = metadata(fileconfig).context("Failed to get the metadata")?;
 

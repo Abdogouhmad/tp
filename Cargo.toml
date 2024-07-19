@@ -1,6 +1,6 @@
 [workspace]
 
-members = ["parser", "lib"]
+members = ["tp-bin", "tp-lib"]
 resolver = "2"
 
 [workspace.package]
