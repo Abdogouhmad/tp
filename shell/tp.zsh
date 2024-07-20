@@ -17,8 +17,8 @@ _tp() {
 
     local context curcontext="$curcontext" state line
     _arguments "${_arguments_options[@]}" : \
-        '-c+[Check the file config in a specific path]:FILE CONFIG:_files' \
-        '--check=[Check the file config in a specific path]:FILE CONFIG:_files' \
+        '-c+[Check the file config in a specific path -c=path]:FILE CONFIG:_files' \
+        '--check=[Check the file config in a specific path --check=path]:FILE CONFIG:_files' \
         '-g[Generate an absolute config]' \
         '--generate[Generate an absolute config]' \
         '-h[Print help (see more with '\''--help'\'')]' \
