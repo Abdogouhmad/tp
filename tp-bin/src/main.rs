@@ -2,9 +2,12 @@
 extern crate tparser;
 
 use clap::builder::{styling::AnsiColor, Styles};
-use clap::Parser;
+use clap::{CommandFactory, Parser};
+use clap_complete::generate;
+use std::io;
 use std::path::PathBuf;
 use tparser::fields::editor_field::Config;
+
 /// Tp is a command line interface for generating and validating helix configuration.
 #[derive(Parser, Debug)]
 #[command(version = "24.7.14", about ,long_about, styles=style_docs())]
@@ -15,10 +18,18 @@ pub struct Tp {
     /// Generate an absolute config
     #[arg(short, long)]
     generate: bool,
+    /// Generate autocompletion script for the specified shell
+    #[arg(long)]
+    completion: Option<clap_complete::Shell>,
 }
 
 fn main() {
     let arg = Tp::parse();
+
+    if let Some(shell) = arg.completion {
+        generate_completions(shell);
+        return;
+    }
 
     if let Some(file_config) = arg.check.as_deref() {
         match file_config.to_str() {
@@ -51,7 +62,6 @@ fn get_extension_from_filename(filename: &str) -> Option<&str> {
         .and_then(std::ffi::OsStr::to_str)
 }
 
-// style help of cli
 fn style_docs() -> Styles {
     Styles::styled()
         .usage(AnsiColor::BrightBlue.on_default())
@@ -61,4 +71,9 @@ fn style_docs() -> Styles {
         .error(AnsiColor::BrightRed.on_default())
         .valid(AnsiColor::BrightWhite.on_default())
         .placeholder(AnsiColor::BrightBlue.on_default())
+}
+
+fn generate_completions(shell: clap_complete::Shell) {
+    let mut cmd = Tp::command();
+    generate(shell, &mut cmd, "tp", &mut io::stdout());
 }
