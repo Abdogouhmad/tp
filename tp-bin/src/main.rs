@@ -4,7 +4,7 @@ extern crate tparser;
 use clap::builder::{styling::AnsiColor, Styles};
 use clap::Parser;
 use std::path::PathBuf;
-use tparser::fields::editor_field::Config;
+use tparser::{fields::editor_field::Config, generate::genrate_config::Generate};
 /// Tp is a command line interface for generating and validating helix configuration.
 #[derive(Parser, Debug)]
 #[command(version = "24.7.14", about ,long_about, styles=style_docs())]
@@ -41,7 +41,7 @@ fn main() {
     }
 
     if arg.generate {
-        colprintln!("<g>Generating the config file in ~/.config/helix ... </g>");
+        Generate::new();
     }
 }
 

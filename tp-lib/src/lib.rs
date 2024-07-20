@@ -8,5 +8,9 @@ pub mod read {
     pub mod path;
 }
 
+/// methods for generating the config
+pub mod generate {
+    pub mod genrate_config;
+}
 #[macro_use]
 pub mod macros;
