@@ -9,7 +9,7 @@ use tparser::fields::editor_field::Config;
 #[derive(Parser, Debug)]
 #[command(version = "24.7.14", about ,long_about, styles=style_docs())]
 pub struct Tp {
-    /// Check the file config in a specific dir -c=path/ --check=path
+    /// Check the file config in a specific path
     #[arg(short, long, value_name = "FILE CONFIG")]
     check: Option<PathBuf>,
     /// Generate an absolute config
