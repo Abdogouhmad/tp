@@ -41,7 +41,13 @@ fn main() {
     }
 
     if arg.generate {
-        Generate::new();
+        match Generate::new() {
+            Ok(_) => {}
+            Err(e) => {
+                eclprintln!("<r>Error: {}</r>", e);
+                std::process::exit(1);
+            }
+        }
     }
 }
 
