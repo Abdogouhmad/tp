@@ -4,8 +4,8 @@ pub mod fields {
 }
 
 /// methods for identifying and reading the file confih
-pub mod read {
-    pub mod path;
+pub mod path {
+    pub mod read;
 }
 
 /// methods for generating the config

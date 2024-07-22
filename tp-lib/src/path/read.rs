@@ -18,7 +18,7 @@ use std::{
 /// # Errors
 ///
 /// This function will return an error if the file cannot be opened.
-pub fn open_file_config(fileconfig: &Path) -> Result<String> {
+pub fn read_path_as_string(fileconfig: &Path) -> Result<String> {
     let metadata = metadata(fileconfig).context("Failed to get the metadata")?;
 
     // check if the file empty or not

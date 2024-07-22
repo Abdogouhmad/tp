@@ -4,38 +4,38 @@
 
 #![allow(dead_code)]
 
-use crate::read::path::open_file_config;
+use crate::path::read::read_path_as_string;
 use anyhow::{Context, Result};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::path::Path;
 use toml::Value;
 
 /// Represents the configuration for the text editor.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct Config {
     /// Theme of the text editor. It could be `gruvbox`, `onedark`, or more. It is a string.
-    theme: String,
+    pub theme: String,
     /// Editor configuration.
-    editor: EditorConfig,
+    pub editor: EditorConfig,
 }
 
 /// Represents the editor-specific configuration.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct EditorConfig {
     /// Indicates if mouse navigation through the buffer is enabled. It could be `false` or `true`.
-    mouse: bool,
+    pub mouse: bool,
     #[serde(rename = "auto-save")]
     /// Auto-save feature that saves automatically when you are away from your terminal.
-    autosave: bool,
+    pub autosave: bool,
     #[serde(rename = "auto-format")]
     /// Formats text during saving.
-    autoformat: bool,
+    pub autoformat: bool,
     /// Status line configuration.
     pub statusline: StatuslineConfig,
 }
 
 /// Represents the status line configuration.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct StatuslineConfig {
     /// Separator character that separates elements of the status line. It could be `|`.
     pub separator: String,
@@ -58,7 +58,7 @@ impl Config {
     ///
     /// This function will return an error if the file cannot be opened or the contents cannot be parsed or validated.
     pub fn new(file_path: &Path) -> Result<Value, anyhow::Error> {
-        let file_content = open_file_config(file_path)?;
+        let file_content = read_path_as_string(file_path)?;
         let config_values: toml::Value = file_content.parse().context("can't parse")?;
         match Self::validate(&config_values) {
             Ok(_) => Ok(config_values),
