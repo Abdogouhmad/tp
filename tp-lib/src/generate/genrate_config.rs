@@ -74,7 +74,7 @@ impl Generate {
     }
 
     fn create_file(filename: &Path) -> anyhow::Result<File, anyhow::Error> {
-        // Check if file already exists and remove it if it does
+        // Check if file already exists and back it up
         if filename.exists() {
             let backed_up_file = format!("{}.bk", filename.display());
             eclprintln!(

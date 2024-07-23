@@ -15,4 +15,6 @@ repository = "https://github.com/abdogouhmad/tp"
 [profile.dev]
 opt-level = 1
 [profile.release]
+lto = true
+codegen-units = 1
 opt-level = 3
