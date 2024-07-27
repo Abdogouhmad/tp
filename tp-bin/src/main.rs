@@ -41,7 +41,7 @@ fn main() {
     }
 
     if arg.generate {
-        match Generate::new() {
+        match Generate::generate_config() {
             Ok(_) => {}
             Err(e) => {
                 eclprintln!("<r>Error: {}</r>", e);

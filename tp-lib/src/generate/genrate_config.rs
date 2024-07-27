@@ -44,7 +44,7 @@ impl Generate {
     /// # Errors
     ///
     /// This function will return an error if the configuration file cannot be created or written to.
-    pub fn new() -> anyhow::Result<File, anyhow::Error> {
+    pub fn generate_config() -> anyhow::Result<File, anyhow::Error> {
         colprintln!("<y>Generating the config... </y> \n");
         let filepath = Path::new("./config.toml");
 
