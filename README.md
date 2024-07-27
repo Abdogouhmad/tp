@@ -19,7 +19,7 @@ TP offers a range of features to assist users in managing their text editor conf
 You can install TP using Cargo, Rust's package manager. Run the following command in your terminal:
 
 ```sh
-cargo install tp
+cargo install --git=https://github.com/Abdogouhmad/tp
 ```
 
 ### Commands

@@ -80,33 +80,58 @@ impl Config {
     ///
     /// This function will return an error if any of the specified fields are not of the expected type.
     fn validate(config_values: &Value) -> Result<(), anyhow::Error> {
-        if let Some(editor) = config_values.get("editor") {
-            if let Some(mouse) = editor.get("mouse") {
-                if !mouse.is_bool() {
-                    anyhow::bail!(
-                        "Invalid type for `mouse`: expected either true or false as boolean, found {:?}",
-                        mouse
-                    );
-                }
-            }
-            if let Some(autosave) = editor.get("auto-save") {
-                if !autosave.is_bool() {
-                    anyhow::bail!(
-                        "Invalid type for `auto-save`: expected either true or false as boolean, found {:?}",
-                        autosave
-                    );
-                }
-            }
-            if let Some(autoformat) = editor.get("auto-format") {
-                if !autoformat.is_bool() {
-                    anyhow::bail!(
-                        "Invalid type for `auto-format`: expected either true or false as boolean, found {:?}",
-                        autoformat
-                    );
-                }
+        // small function that validate the fields
+        fn validate_field(
+            value: Option<&Value>,
+            expected_type: &str,
+            field_name: &str,
+            check: impl Fn(&Value) -> bool,
+        ) -> Result<(), anyhow::Error> {
+            match value {
+                Some(v) if check(v) => Ok(()),
+                Some(v) => anyhow::bail!(
+                    "Invalid type for `{}`: expected {}, found {:?}",
+                    field_name,
+                    expected_type,
+                    v
+                ),
+                None => Ok(()),
             }
         }
 
+        // ! validate theme only
+        validate_field(config_values.get("theme"), "string", "theme", Value::is_str)?;
+
+        // ! validate everything that is under [editor]
+        if let Some(editor) = config_values.get("editor") {
+            // mouse
+            validate_field(editor.get("mouse"), "boolean", "mouse", Value::is_bool)?;
+            // auto save
+            validate_field(
+                editor.get("auto-save"),
+                "boolean",
+                "auto-save",
+                Value::is_bool,
+            )?;
+            // format
+            validate_field(
+                editor.get("auto-format"),
+                "boolean",
+                "auto-format",
+                Value::is_bool,
+            )?;
+
+            // status line
+            if let Some(statusline) = editor.get("statusline") {
+                validate_field(
+                    statusline.get("separator"),
+                    "string",
+                    "separator",
+                    Value::is_str,
+                )?;
+                validate_field(statusline.get("left"), "array", "left", Value::is_array)?;
+            }
+        }
         Ok(())
     }
 }
