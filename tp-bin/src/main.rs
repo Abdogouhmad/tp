@@ -3,6 +3,7 @@ extern crate tparser;
 
 use clap::builder::{styling::AnsiColor, Styles};
 use clap::Parser;
+use std::fs::remove_file;
 use std::path::PathBuf;
 use tparser::{fields::editor_field::Config, generate::genrate_config::Generate};
 /// Tp is a command line interface for generating and validating helix configuration.
@@ -15,6 +16,10 @@ pub struct Tp {
     /// Generate an absolute config
     #[arg(short, long)]
     generate: bool,
+
+    /// clean the back up within the current directory
+    #[arg(long)]
+    clean: bool,
 }
 
 fn main() {
@@ -49,8 +54,17 @@ fn main() {
             }
         }
     }
+
+    // clean option cmd
+    if arg.clean {
+        match remove_file("config.toml.bk") {
+            Ok(_) => colprintln!("<g> Config back up file is removed </g>"),
+            Err(e) => eclprintln!("<r>Something went wrong:</r> {}", e),
+        }
+    }
 }
 
+// get the extension from file
 fn get_extension_from_filename(filename: &str) -> Option<&str> {
     std::path::Path::new(filename)
         .extension()

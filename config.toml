@@ -1,0 +1,10 @@
+theme = "gruvbox"
+
+[editor]
+mouse = true
+auto-save = true
+auto-format = true
+
+[editor.statusline]
+separator = "|"
+left = ["mode", "spinner"]
